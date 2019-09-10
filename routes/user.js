@@ -1,4 +1,3 @@
-'use strict';
 const express = require('express'),
       router = express.Router();
 
@@ -12,19 +11,24 @@ router.get('/:name', function (req, res) {
     let domain = req.app.get('domain');
     let username = name;
     name = `${name}@${domain}`;
-    let result = db.prepare('select actor from accounts where name = ?').get(name);
-    if (result === undefined) {
-      return res.status(404).send(`No record found for ${name}.`);
-    }
-    else {
-      let tempActor = JSON.parse(result.actor);
-      // Added this followers URI for Pleroma compatibility, see https://github.com/dariusk/rss-to-activitypub/issues/11#issuecomment-471390881
-      // New Actors should have this followers URI but in case of migration from an old version this will add it in on the fly
-      if (tempActor.followers === undefined) {
-        tempActor.followers = `https://${domain}/u/${username}/followers`;
-      }
-      res.json(tempActor);
-    }
+    // let result = db.prepare('select actor from accounts where name = ?').get(name);
+    const models = req.app.get('models');
+    // models.User.findOne({id: `https://${domain}/u/${name}`}).exec((err, user) => {
+    models.User.find((err, user) => {
+      return res.json(user);
+    })
+    // if (result === undefined) {
+    //   return res.status(404).send(`No record found for ${name}.`);
+    // }
+    // else {
+    //   let tempActor = JSON.parse(result.actor);
+    //   // Added this followers URI for Pleroma compatibility, see https://github.com/dariusk/rss-to-activitypub/issues/11#issuecomment-471390881
+    //   // New Actors should have this followers URI but in case of migration from an old version this will add it in on the fly
+    //   if (tempActor.followers === undefined) {
+    //     tempActor.followers = `https://${domain}/u/${username}/followers`;
+    //   }
+    //   res.json(tempActor);
+    // }
   }
 });
 
