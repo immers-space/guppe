@@ -16,10 +16,10 @@
       ActivityPub service, but they automatically share anything you send them with all of their followers.
     </p>
     <ol>
-      <li>Follow a group on @gup.pe to join that group</li>
-      <li>Mention a group on @gup.pe to share a post with everyone in the group</li>
-      <li>New groups are created on demand, just search for or mention @YourGroupNameHere@gup.pe and it will show up</li>
-      <li>Visit a @gup.pe group profile to see the group history</li>
+      <li>Follow a group on @a.gup.pe to join that group</li>
+      <li>Mention a group on @a.gup.pe to share a post with everyone in the group</li>
+      <li>New groups are created on demand, just search for or mention @YourGroupNameHere@a.gup.pe and it will show up</li>
+      <li>Visit a @a.gup.pe group profile to see the group history</li>
     </ol>
     <h2 class="w3-center">Active Groups</h2>
     <div class="profile-grid w3-margin-bottom w3-mobile">
