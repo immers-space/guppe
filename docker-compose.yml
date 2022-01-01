@@ -3,7 +3,7 @@ version: "3.8"
 services:
   guppe:
     build: .
-    restart: unless-stopped
+    restart: always
     ports:
       - 443:443
       - 80:80
@@ -24,7 +24,7 @@ services:
     
   mongodb:
     image: mongo:4.2
-    restart: unless-stopped
+    restart: always
     volumes:
       - mongo-data:/data/db
     logging:

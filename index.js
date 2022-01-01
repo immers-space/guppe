@@ -108,7 +108,9 @@ app.on('apex-inbox', async ({ actor, activity, recipient, object }) => {
         apex.consts.publicAddress
       ]
       const share = await apex.buildActivity('Announce', recipient.id, to, {
-        object: activity.object[0].id
+        object: activity.object[0].id,
+        // make sure sender can see it even if they don't follow yet
+        cc: actor.id
       })
       apex.addToOutbox(recipient, share)
       break
