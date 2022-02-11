@@ -1,6 +1,6 @@
 {
   "name": "guppe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Decentralized social groups with ActivityPub, NodeJS, Express, Vue, and Mongodb",
   "main": "index.js",
   "dependencies": {
