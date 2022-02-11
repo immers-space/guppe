@@ -12,7 +12,7 @@ const ActivitypubExpress = require('activitypub-express')
 const { DOMAIN, KEY_PATH, CERT_PATH, CA_PATH, PORT_HTTPS, DB_URL, DB_NAME } = process.env
 
 const app = express()
-const client = new MongoClient(DB_URL, { useUnifiedTopology: true, useNewUrlParser: true })
+const client = new MongoClient(DB_URL)
 const sslOptions = {
   key: KEY_PATH && fs.readFileSync(path.join(__dirname, KEY_PATH)),
   cert: CERT_PATH && fs.readFileSync(path.join(__dirname, CERT_PATH)),
@@ -175,7 +175,7 @@ app.use(function (err, req, res, next) {
   }
 })
 
-client.connect({ useNewUrlParser: true })
+client.connect()
   .then(async () => {
     const { default: AutoEncrypt } = await import('@small-tech/auto-encrypt')
     apex.store.db = client.db(DB_NAME)
