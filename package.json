@@ -5,14 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "@small-tech/auto-encrypt": "^3.0.1",
-    "activitypub-express": "^2.2.1",
+    "activitypub-express": "^3.0.0",
     "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.4",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "express": "^4.16.3",
-    "express-basic-auth": "^1.1.5",
     "http-signature": "github:wmurphyrd/node-http-signature#9c02eeb",
-    "mongodb": "^3.3.2",
+    "mongodb": "^4.3.1",
     "morgan": "^1.9.1",
     "node-graceful-shutdown": "1.1.0",
     "request": "^2.88.0",
@@ -22,10 +21,8 @@
     "node": ">=16"
   },
   "devDependencies": {
-    "chokidar": "^3.1.1",
-    "nodemon": "^1.19.3",
-    "standard": "^16.0.4",
-    "standardjs": "^1.0.0-alpha"
+    "nodemon": "^2.0.15",
+    "standard": "^16.0.4"
   },
   "scripts": {
     "start": "node index.js",
