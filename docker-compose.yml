@@ -21,6 +21,7 @@ services:
       driver: local
       options:
         max-size: '10m'
+
   worker1:
     build: .
     command: [ "node", "deliveryWorker.js" ]
@@ -35,6 +36,20 @@ services:
       options:
         max-size: '10m'
     
+  worker2:
+    build: .
+    command: [ "node", "deliveryWorker.js" ]
+    restart: always
+    env_file: '.env'
+    environment:
+      DB_URL: 'mongodb://mongodb:27017'
+    depends_on:
+      - mongodb
+    logging:
+      driver: local
+      options:
+        max-size: '10m'
+
   mongodb:
     image: mongo:4.2
     restart: always
