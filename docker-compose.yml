@@ -21,6 +21,23 @@ services:
       driver: local
       options:
         max-size: '10m'
+  worker1:
+    build: .
+    command: [ "node", "deliveryWorker.js" ]
+    restart: always
+    ports:
+      - 443:443
+      - 80:80
+    env_file: '.env'
+    environment:
+      DB_URL: 'mongodb://mongodb:27017'
+      PORT_HTTPS: 443
+    depends_on:
+      - mongodb
+    logging:
+      driver: local
+      options:
+        max-size: '10m'
     
   mongodb:
     image: mongo:4.2
