@@ -27,7 +27,7 @@ services:
     command: [ "node", "deliveryWorker.js" ]
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 8
     restart: always
     env_file: '.env'
     environment:
