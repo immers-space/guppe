@@ -9,6 +9,7 @@ const history = require('connect-history-api-fallback')
 const { onShutdown } = require('node-graceful-shutdown')
 const ActivitypubExpress = require('activitypub-express')
 
+const { version } = require('./package.json')
 const { DOMAIN, KEY_PATH, CERT_PATH, CA_PATH, PORT_HTTPS, DB_URL, DB_NAME } = process.env
 
 const app = express()
@@ -41,6 +42,8 @@ const routes = {
   likes: '/s/:id/likes'
 }
 const apex = ActivitypubExpress({
+  name: 'Guppe Groups',
+  version,
   domain: DOMAIN,
   actorParam: 'actor',
   objectParam: 'id',
@@ -93,6 +96,8 @@ app.get(
   apex.net.validators.targetActor,
   apex.net.wellKnown.respondWebfinger
 )
+app.get('/.well-known/nodeinfo', apex.net.nodeInfoLocation.get)
+app.get('/nodeinfo/:version', apex.net.nodeInfo.get)
 
 app.on('apex-inbox', async ({ actor, activity, recipient, object }) => {
   switch (activity.type.toLowerCase()) {
