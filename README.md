@@ -26,7 +26,7 @@ git clone https://github.com/wmurphyrd/guppe.git
 cd guppe
 cp .env.defaults .env
 echo DOMAIN=yourdomain.com >> .env
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 ## License
