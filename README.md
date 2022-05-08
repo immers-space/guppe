@@ -29,6 +29,37 @@ echo DOMAIN=yourdomain.com >> .env
 docker-compose up --build -d
 ```
 
+## Updating
+
+Backup database:
+
+```
+docker-compose exec -T mongodb sh -c 'mongodump --archive' > guppe.dump
+```
+
+Fetch latest code & restart server:
+
+```
+git pull
+docker-compose up --build -d
+```
+
+## Optional configuration
+
+Additional values can be set in `.env` file
+
+| Setting | Description |
+| --- | --- |
+| PROXY_MODE | Enable use behind an SSL-terminating proxy or load balancer, serves over http instead of https and sets Express `trust proxy` setting to the value of `PROXY_MODE` (e.g. `1`, [other options](https://expressjs.com/en/guide/behind-proxies.html)) See note. |
+
+**Notes on use with a reverse proxy**: When setting proxyMode, you must ensure your reverse proxy sets the following headers: X-Forwarded-For, X-Forwarded-Host, and X-Forwarded-Proto (example for nginx below).
+
+```
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Host $host;
+proxy_set_header X-Forwarded-Proto $scheme;
+```
+
 ## License
 
 Copyright (c) 2021 William Murphy. Licensed under the AGPL-3

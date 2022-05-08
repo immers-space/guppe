@@ -4,13 +4,14 @@ const express = require('express')
 const MongoClient = require('mongodb').MongoClient
 const fs = require('fs')
 const https = require('https')
+const http = require('http')
 const morgan = require('morgan')
 const history = require('connect-history-api-fallback')
 const { onShutdown } = require('node-graceful-shutdown')
 const ActivitypubExpress = require('activitypub-express')
 
 const { version } = require('./package.json')
-const { DOMAIN, KEY_PATH, CERT_PATH, CA_PATH, PORT_HTTPS, DB_URL, DB_NAME } = process.env
+const { DOMAIN, KEY_PATH, CERT_PATH, CA_PATH, PORT_HTTPS, DB_URL, DB_NAME, PROXY_MODE } = process.env
 
 const app = express()
 const client = new MongoClient(DB_URL)
@@ -191,10 +192,23 @@ client.connect()
       await apex.store.saveObject(systemUser)
       apex.systemUser = systemUser
     }
-
-    const server = process.env.NODE_ENV === 'production'
-      ? AutoEncrypt.https.createServer({ domains: [DOMAIN] }, app)
-      : https.createServer(sslOptions, app)
+    let server
+    if (process.env.NODE_ENV === 'production') {
+      if (PROXY_MODE) {
+        server = http.createServer(app)
+        try {
+          // boolean or number
+          app.set('trust proxy', JSON.parse(PROXY_MODE))
+        } catch (ignore) {
+          // string
+          app.set('trust proxy', PROXY_MODE)
+        }
+      } else {
+        server = AutoEncrypt.https.createServer({ domains: [DOMAIN] }, app)
+      }
+    } else {
+      server = https.createServer(sslOptions, app)
+    }
     server.listen(PORT_HTTPS, function () {
       console.log('Guppe server listening on port ' + PORT_HTTPS)
     })
