@@ -1,4 +1,4 @@
-## Unreleased
+## v1.2.0 (2022-05-15)
 
 * Fix: show correct domain name in guppe instructions on homepage
 * Add: Support running behind SSL-terminating reverse proxy (PROXY_MODE environment variable)
