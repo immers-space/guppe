@@ -8,7 +8,7 @@
       <input v-model="handle" class="w3-input w3-center" placeholder="user@example.com" type="text">
       <button class="w3-btn w3-cyan w3-block w3-margin-top" @click.prevent="doFollow"
               :disabled="fetchingRemote">
-        Procced to follow
+        Proceed to follow
       </button>
     </form>
     <div v-show="invalidHandle" class="w3-panel w3-pale-red w3-display-container w3-border">
