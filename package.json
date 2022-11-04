@@ -4,7 +4,7 @@
   "description": "Decentralized social groups with ActivityPub, NodeJS, Express, Vue, and Mongodb",
   "main": "index.js",
   "dependencies": {
-    "@small-tech/auto-encrypt": "^3.0.1",
+    "@small-tech/auto-encrypt": "^3.1.0",
     "activitypub-express": "^3.1.2",
     "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.4",
