@@ -19,14 +19,15 @@ fallback user profile discovery.
 
 ## Installation
 
-`Dockerfile` and `docker-compose.yml` are provided for easy install
+Guppe uses Docker Swarm for easy load balancing Web server replicas
 
 ```
 git clone https://github.com/wmurphyrd/guppe.git
 cd guppe
 cp .env.defaults .env
 echo DOMAIN=yourdomain.com >> .env
-docker-compose up --build -d
+docker swarm init --advertise-addr 127.0.0.1
+docker stack deploy --compose-file docker-compose.yml guppe
 ```
 
 ## Updating
@@ -41,7 +42,7 @@ Fetch latest code & restart server:
 
 ```
 git pull
-docker-compose up --build -d
+docker stack deploy --compose-file docker-compose.yml guppe
 ```
 
 ## Optional configuration

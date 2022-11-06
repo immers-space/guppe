@@ -2,7 +2,10 @@ version: "3.8"
 
 services:
   guppe:
-    build: .
+    image: datatitian/guppe
+    deploy:
+      mode: replicated
+      replicas: 4
     restart: always
     ports:
       - 443:443
@@ -21,7 +24,24 @@ services:
       driver: local
       options:
         max-size: '10m'
-    
+
+  worker1:
+    image: datatitian/guppe
+    command: [ "node", "deliveryWorker.js" ]
+    deploy:
+      mode: replicated
+      replicas: 8
+    restart: always
+    env_file: '.env'
+    environment:
+      DB_URL: 'mongodb://mongodb:27017'
+    depends_on:
+      - mongodb
+    logging:
+      driver: local
+      options:
+        max-size: '10m'
+
   mongodb:
     image: mongo:4.2
     restart: always
