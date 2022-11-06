@@ -3,6 +3,9 @@ version: "3.8"
 services:
   guppe:
     build: .
+    deploy:
+      mode: replicated
+      replicas: 4
     restart: always
     ports:
       - 443:443

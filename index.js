@@ -49,6 +49,7 @@ const apex = ActivitypubExpress({
   actorParam: 'actor',
   objectParam: 'id',
   itemsPerPage: 100,
+  offlineMode: true, // delivery done in workers only
   routes
 })
 
