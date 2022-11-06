@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   guppe:
-    build: .
+    image: datatitian/guppe
     deploy:
       mode: replicated
       replicas: 4
@@ -26,7 +26,7 @@ services:
         max-size: '10m'
 
   worker1:
-    build: .
+    image: datatitian/guppe
     command: [ "node", "deliveryWorker.js" ]
     deploy:
       mode: replicated
