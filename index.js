@@ -225,10 +225,10 @@ client.connect()
       console.log('Guppe server listening on port ' + PORT_HTTPS)
     })
     onShutdown(async () => {
-      await client.close()
       await new Promise((resolve, reject) => {
         server.close(err => (err ? reject(err) : resolve()))
       })
+      await client.close()
       console.log('Guppe server closed')
     })
   })
