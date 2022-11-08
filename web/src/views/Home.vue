@@ -22,6 +22,7 @@
       <li>Visit a @{{ domain }} group profile to see the group history</li>
     </ol>
     <h2 class="w3-center">Active Groups</h2>
+    <p class="w3-center">Top 50 groups with the most recent posts</p>
     <div class="profile-grid w3-margin-bottom w3-mobile">
       <div v-for="group of groups" class="w3-card w3-container w3-section" :key="group._id">
         <profile-summary :actor="group" class="profile"/>

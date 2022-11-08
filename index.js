@@ -49,7 +49,8 @@ const apex = ActivitypubExpress({
   actorParam: 'actor',
   objectParam: 'id',
   itemsPerPage: 100,
-  offlineMode: true, // delivery done in workers only
+  // delivery done in workers only in production
+  offlineMode: process.env.NODE_ENV === 'production',
   routes
 })
 
@@ -173,6 +174,16 @@ app.get('/groups', (req, res, next) => {
       console.log(err.message)
       return res.status(500).send()
     })
+})
+app.get('/stats', async (req, res, next) => {
+  try {
+    const queueSize = await apex.store.db.collection('deliveryQueue')
+      .countDocuments({ attempt: 0 })
+    const uptime = process.uptime()
+    res.json({ queueSize, uptime })
+  } catch (err) {
+    next(err)
+  }
 })
 
 app.use(function (err, req, res, next) {
