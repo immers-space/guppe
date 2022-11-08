@@ -20,5 +20,4 @@ RUN npm run build
 # entry
 WORKDIR /usr/src/guppe
 EXPOSE 443 80
-HEALTHCHECK CMD /usr/bin/curl --fail http://localhost/ || exit 1
 CMD [ "node", "index.js" ]

@@ -24,13 +24,21 @@ services:
       driver: local
       options:
         max-size: '10m'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+
 
   worker1:
     image: datatitian/guppe
     command: [ "node", "deliveryWorker.js" ]
     deploy:
       mode: replicated
-      replicas: 8
+      replicas: 34
     restart: always
     env_file: '.env'
     environment:
