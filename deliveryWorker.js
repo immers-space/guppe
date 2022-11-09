@@ -37,7 +37,7 @@ client.connect()
     apex.store.db = client.db(DB_NAME)
     let resumeDeliveryTimer
     function deliver () {
-      apex.startDelivery()
+      Promise.resolve(apex.startDelivery())
         .catch(err => {
           console.error('Error starting delivery', err)
         })
