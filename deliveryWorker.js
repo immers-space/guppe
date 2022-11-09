@@ -28,7 +28,7 @@ const apex = ActivitypubExpress({
   actorParam: 'actor',
   objectParam: 'id',
   itemsPerPage: 100,
-  requestTimeout: 500,
+  requestTimeout: process.env.requestTimeout || 1000,
   routes
 })
 
