@@ -28,6 +28,7 @@ const apex = ActivitypubExpress({
   actorParam: 'actor',
   objectParam: 'id',
   itemsPerPage: 100,
+  requestTimeout: 500,
   routes
 })
 
@@ -37,16 +38,26 @@ client.connect()
     let resumeDeliveryTimer
     function deliver () {
       apex.startDelivery()
-      // delivery will stop if the queue empties, ensure it keeps running when new work is available
-      // no effect if called while already running
-      resumeDeliveryTimer = setTimeout(deliver, 5000)
+        .catch(err => {
+          console.error('Error starting delivery', err)
+        })
+        .finally(() => {
+          // delivery will stop if the queue empties, ensure it keeps running when new work is available
+          // no effect if called while already running
+          resumeDeliveryTimer = setTimeout(deliver, 5000)
+        })
     }
     deliver()
     onShutdown(async () => {
       clearTimeout(resumeDeliveryTimer)
+      apex.offlineMode = true
       // time for last delivery to finish (need to fix in apex)
       await new Promise(resolve => setTimeout(resolve, 3000))
       await client.close()
       console.log('Guppe delivery worker closed')
     })
+  })
+  .catch(err => {
+    console.error('Error starting delivery worker', err)
+    process.exit(1)
   })
