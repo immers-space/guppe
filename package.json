@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@small-tech/auto-encrypt": "^3.1.0",
-    "activitypub-express": "^4.0.1",
+    "activitypub-express": "^4.1.0",
     "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.4",
     "dotenv": "^16.0.3",
