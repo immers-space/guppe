@@ -6,6 +6,8 @@ services:
     deploy:
       mode: replicated
       replicas: 4
+      constraints:
+        - node.labels.web
     restart: always
     ports:
       - 443:443
@@ -39,6 +41,8 @@ services:
     deploy:
       mode: replicated
       replicas: 34
+      constraints:
+        - node.labels.web
     restart: always
     env_file: '.env'
     environment:
@@ -52,6 +56,11 @@ services:
 
   mongodb:
     image: mongo:4.2
+    deploy:
+      mode: replicated
+      replicas: 1
+      constraints:
+        - node.labels.database
     restart: always
     volumes:
       - mongo-data:/data/db
