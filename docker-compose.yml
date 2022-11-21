@@ -5,7 +5,7 @@ services:
     image: datatitian/guppe
     deploy:
       mode: replicated
-      replicas: 4
+      replicas: 8
       placement:
         constraints:
           - "node.labels.type==web"
@@ -41,7 +41,7 @@ services:
     command: [ "node", "deliveryWorker.js" ]
     deploy:
       mode: replicated
-      replicas: 34
+      replicas: 50
       placement:
         constraints:
           - "node.labels.type==web"
