@@ -5,6 +5,20 @@ Social groups for the fediverse - making it easy to connect and meet new people 
 This server-2-server ActivityPub implementation adds decentralized, federated "groups" support across all ActivityPub compliant social media networks. Users join groups by following group-type actors on Guppe servers and contribute to groups by mentioning those same actors in a post. Guppe group actors will automatically forward posts they receive to all group members so that everyone in the group sees any post made to the group. Guppe group actors' profiles (e.g. outboxes) also serve as a group discussion history.
 Creation of new groups is automatic, users simply search for or mention a new group and it will be created.
 
+## Guide and [Support Guppe Groups](https://opencollective.com/guppe-groups)
+
+Guppe Groups adds simple social groups to Mastodon and other federated social networks. I created Guppe because I had moved all my online social activity to Mastodon to rid myself of the manipulation of extractive social platforms, but I missed the ability to connect with new people around shared interests using groups features that those platforms offer. It started in 2019 as a simple demo to help me learn ActivityPub in order to build Immers Space, the fediverse app for 3D immersive content, but I've kept it going because so many people find it useful.
+
+In 2022, with the unprecedented influx of traffic to Mastodon from people leaving Twitter, the cost of operating Guppe has risen from $10/month to over $100/month as it now serves 4,000 requests per minute during peak times. That's more than I can justify spending on this hobby horse, so, with some prompting from Guppe users, I've set up an [Open Collective page](https://opencollective.com/guppe-groups) to allow contributions - with a twist.
+
+I fundamentally do not believe that being a programmer gives me any special right to make decisions for others, and I recognize that the interests of the operator of a social app often conflict with the interests of the users of that app. That's why we invested in consultants and legal counsel to develop a [cooperative governance model for Immers Space](https://opencollective.com/immers-space) that shares power between the workers and the users of the software, and Immers Space will now manage Guppe with a similar model.
+
+* Your contributions to Guppe on Open Collective will count as membership dues
+* Contributions received in excess of operating costs will be used to fund development hours to improve Guppe and add new features
+* Development decisions will be made democratically through member votes on our Loomio group
+
+[![Guppe Members](https://opencollective.com/guppe-groups/tiers/member.svg?avatarHeight=36&width=600)](https://opencollective.com/guppe-groups)
+
 
 ## Tech stack
 
