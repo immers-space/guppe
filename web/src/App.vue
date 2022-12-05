@@ -2,7 +2,11 @@
   <div id="app">
     <div class="w3-bar w3-black w3-card">
       <div class="w3-section flex">
-        <router-link to="/"><i class="fas fa-home" title="home"></i></router-link>
+        <nav id="main-nav">
+          <router-link to="/"><i class="fas fa-home" title="home"></i></router-link>
+          <a href="https://github.com/immers-space/guppe/wiki/Guppe-Groups-FAQ"><i class="fas fa-question-circle" title="FAQ"></i>FAQ</a>
+          <a href="https://opencollective.com/guppe-groups"><i class="fas fa-dollar-sign" title="support"></i>Support</a>
+        </nav>
         <div v-if="stats" class="flex">
           <div>Uptime: {{ uptime }}</div>
           <div>Backlog: {{ queueSize }}</div>
@@ -69,5 +73,13 @@ export default {
 .flex > * {
   padding-left: 16px;
   padding-right: 16px;
+}
+#main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+#main-nav a i {
+ padding-right: 3px;
 }
 </style>
