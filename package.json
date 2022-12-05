@@ -24,7 +24,9 @@
   },
   "scripts": {
     "start": "node index.js",
-    "start:prod": "NODE_ENV=production authbind node index.js",
+    "build": "docker build -t datatitian/guppe .",
+    "publish": "docker push datatitian/guppe:latest",
+    "build-pub": "npm run build && npm run publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Will Murphy",
