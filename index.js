@@ -74,6 +74,28 @@ async function actorOnDemand (req, res, next) {
   } catch (err) { return next(err) }
   next()
 }
+// Do not boost posts from servers who abuse the service.
+apex.net.inbox.post.splice(
+  // Blocked domain check is inserted into apex inbox route right after the sender is verified
+  apex.net.inbox.post.indexOf(apex.net.security.verifySignature) + 1,
+  0,
+  async function rejectBlockedDomains (req, res, next) {
+    try {
+      const url = new URL(res.locals.apex.sender.id)
+      const domain = await req.app.locals.apex.store.db.collection('servers').findOne({
+        hostname: url.hostname
+      })
+      if (domain?.blocked) {
+        console.log(`Ignoring post from ${url}:`, req.body)
+        return res.sendStatus(200)
+      }
+    } catch (err) {
+      console.error('Error checking domain blocks:', err)
+    }
+    next()
+  }
+)
+
 // define routes using prepacakged middleware collections
 app.route(routes.inbox)
   .post(actorOnDemand, apex.net.inbox.post)
@@ -198,6 +220,12 @@ client.connect()
     const { default: AutoEncrypt } = await import('@small-tech/auto-encrypt')
     apex.store.db = client.db(DB_NAME)
     await apex.store.setup()
+    await apex.store.db.collection('servers').createIndex({
+      hostname: 1
+    }, {
+      name: 'servers-primary',
+      unique: true
+    })
     apex.systemUser = await apex.store.getObject(apex.utils.usernameToIRI('system_service'), true)
     if (!apex.systemUser) {
       const systemUser = await apex.createActor('system_service', `${DOMAIN} system service`, `${DOMAIN} system service`, icon, 'Service')
