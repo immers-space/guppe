@@ -39,8 +39,13 @@ Guppe uses Docker Swarm for easy load balancing Web server replicas
 git clone https://github.com/wmurphyrd/guppe.git
 cd guppe
 cp .env.defaults .env
-echo DOMAIN=yourdomain.com >> .env
+export DOMAIN=yourdomain.com
+echo DOMAIN=$DOMAIN >> .env
+echo ALLOWED_DOMAINS=$DOMAIN >> .env
+echo SITES='"'$DOMAIN=guppe:8085'"' >> .env
 docker swarm init --advertise-addr 127.0.0.1
+# all on one node for simple setup or split these onto different nodes for a distributed swarm
+docker node update --label-add web=true --label-add database=true --label-add delivery=true $(hostname)
 docker stack deploy --compose-file docker-compose.yml guppe
 ```
 

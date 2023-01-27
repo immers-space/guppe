@@ -1,22 +1,28 @@
 version: "3.8"
 
 services:
+  proxy:
+    image: valian/docker-nginx-auto-ssl
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ssl_data:/etc/resty-auto-ssl
+    env_file: '.env'
   guppe:
     image: datatitian/guppe
     deploy:
       mode: replicated
-      replicas: 8
+      replicas: 4
       placement:
         constraints:
-          - "node.labels.type==web"
+          - "node.labels.web==true"
     restart: always
-    ports:
-      - 443:443
-      - 80:80
     env_file: '.env'
     environment:
       DB_URL: 'mongodb://mongodb:27017'
-      PORT_HTTPS: 443
+      PROXY_MODE: 1
     depends_on:
       - mongodb
     volumes:
@@ -34,17 +40,15 @@ services:
       retries: 3
       start_period: 30s
 
-
-
   worker1:
     image: datatitian/guppe
     command: [ "node", "deliveryWorker.js" ]
     deploy:
       mode: replicated
-      replicas: 50
+      replicas: 25
       placement:
         constraints:
-          - "node.labels.type==web"
+          - "node.labels.delivery==true"
     restart: always
     env_file: '.env'
     environment:
@@ -63,7 +67,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - "node.labels.type==database"
+          - "node.labels.database==true"
     restart: always
     volumes:
       - mongo-data:/data/db
