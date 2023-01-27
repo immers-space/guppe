@@ -25,10 +25,6 @@ services:
       PROXY_MODE: 1
     depends_on:
       - mongodb
-    volumes:
-      - certs:/root/.small-tech.org/auto-encrypt
-      # localdev certs
-      - ./certs:/usr/src/guppe/certs
     logging:
       driver: local
       options:
@@ -78,4 +74,4 @@ services:
 
 volumes:
   mongo-data:
-  certs:
+  ssl_data:
