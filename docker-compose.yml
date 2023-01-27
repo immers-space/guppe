@@ -13,6 +13,8 @@ services:
       - 443:443
     volumes:
       - ssl_data:/etc/resty-auto-ssl
+    depends_on:
+      - guppe
     env_file: '.env'
   guppe:
     image: datatitian/guppe
@@ -34,7 +36,7 @@ services:
       options:
         max-size: '10m'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
+      test: ["CMD", "curl", "-f", "http://localhost:8085"]
       interval: 1m30s
       timeout: 10s
       retries: 3
