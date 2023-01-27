@@ -1,3 +1,8 @@
+## Unreleased
+
+* Change production swarm setup to use nginx for ssl-terminating reverse proxy due to renewal issues with @small-tech/auto-encrypt in in swarm mode
+* Update activitypub-express to fix [a spec compliance issue](https://github.com/immers-space/activitypub-express/pull/83)
+
 ## v1.2.0 (2022-05-15)
 
 * Fix: show correct domain name in guppe instructions on homepage
