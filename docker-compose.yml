@@ -3,6 +3,10 @@ version: "3.8"
 services:
   proxy:
     image: valian/docker-nginx-auto-ssl
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.web==true"
     restart: always
     ports:
       - 80:80
