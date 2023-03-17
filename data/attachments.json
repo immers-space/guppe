@@ -1,0 +1,29 @@
+[
+  {
+    "type": "PropertyValue",
+    "name": [
+      "Support Guppe"
+    ],
+    "value": [
+      "<a href=\"https://opencollective.com/guppe-groups\">https://opencollective.com/guppe-groups</a>"
+    ]
+  },
+  {
+    "type": "PropertyValue",
+    "name": [
+      "Get support"
+    ],
+    "value": [
+      "<span class=\"h-card\"><a href=\"https://a.gup.pe/u/guppegroups\" class=\"u-url mention\">@<span>GuppeGroups@a.gup.pe</span></a></span>"
+    ]
+  },
+  {
+    "type": "PropertyValue",
+    "name": [
+      "Admin contact"
+    ],
+    "value": [
+      "<span class=\"h-card\"><a href=\"https://social.coop/@datatitian\" class=\"u-url mention\">@<span>datatitian@social.coop</span></a></span>"
+    ]
+  }
+]

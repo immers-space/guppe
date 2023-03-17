@@ -11,7 +11,7 @@ const { onShutdown } = require('node-graceful-shutdown')
 const ActivitypubExpress = require('activitypub-express')
 
 const { version } = require('./package.json')
-const { DOMAIN, KEY_PATH, CERT_PATH, CA_PATH, PORT_HTTPS, DB_URL, DB_NAME, PROXY_MODE } = process.env
+const { DOMAIN, KEY_PATH, CERT_PATH, CA_PATH, PORT_HTTPS, DB_URL, DB_NAME, PROXY_MODE, ADMIN_SECRET, USE_ATTACHMENTS } = process.env
 
 const app = express()
 const client = new MongoClient(DB_URL)
@@ -51,11 +51,29 @@ const apex = ActivitypubExpress({
   itemsPerPage: 100,
   // delivery done in workers only in production
   offlineMode: process.env.NODE_ENV === 'production',
+  context: require('./data/context.json'),
   routes
 })
 
-app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status Accepts ":req[accept]" ":referrer" ":user-agent"'))
-app.use(express.json({ type: apex.consts.jsonldTypes }), apex)
+app.use(
+  morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status Accepts ":req[accept]" ":referrer" ":user-agent"'),
+  express.json({ type: apex.consts.jsonldTypes }),
+  apex,
+  function checkAdminKey (req, res, next) {
+    if (ADMIN_SECRET && req.get('authorization') === `Bearer ${ADMIN_SECRET}`) {
+      res.locals.apex.authorized = true
+    }
+    next()
+  }
+)
+
+async function createGuppeActor (...args) {
+  const actor = await apex.createActor(...args)
+  if (USE_ATTACHMENTS) {
+    actor.attachment = require('./data/attachments.json')
+  }
+  return actor
+}
 
 // Create new groups on demand whenever someone tries to access one
 async function actorOnDemand (req, res, next) {
@@ -68,7 +86,7 @@ async function actorOnDemand (req, res, next) {
     if (!(await apex.store.getObject(actorIRI)) && actor.length <= 255) {
       console.log(`Creating group: ${actor}`)
       const summary = `I'm a group about ${actor}. Follow me to get all the group posts. Tag me to share with the group. Create other groups by searching for or tagging @yourGroupName@${DOMAIN}`
-      const actorObj = await apex.createActor(actor, `${actor} group`, summary, icon, 'Group')
+      const actorObj = await createGuppeActor(actor, `${actor} group`, summary, icon, 'Group')
       await apex.store.saveObject(actorObj)
     }
   } catch (err) { return next(err) }
@@ -102,8 +120,7 @@ app.route(routes.inbox)
   .get(actorOnDemand, apex.net.inbox.get)
 app.route(routes.outbox)
   .get(actorOnDemand, apex.net.outbox.get)
-  // no C2S at present
-  // .post(apex.net.outbox.post)
+  .post(apex.net.outbox.post)
 
 // replace apex's target actor validator with our create on demand method
 app.get(routes.actor, actorOnDemand, apex.net.actor.get)
@@ -228,7 +245,7 @@ client.connect()
     })
     apex.systemUser = await apex.store.getObject(apex.utils.usernameToIRI('system_service'), true)
     if (!apex.systemUser) {
-      const systemUser = await apex.createActor('system_service', `${DOMAIN} system service`, `${DOMAIN} system service`, icon, 'Service')
+      const systemUser = await createGuppeActor('system_service', `${DOMAIN} system service`, `${DOMAIN} system service`, icon, 'Service')
       await apex.store.saveObject(systemUser)
       apex.systemUser = systemUser
     }
