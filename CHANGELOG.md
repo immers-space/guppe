@@ -1,4 +1,4 @@
-## Unreleased
+## v1.4.0 (2023-03-17)
 
 ### Added
 * Optional `ADMIN_SECRET` env var enables C2S API access with the given bearer token
