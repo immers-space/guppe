@@ -70,7 +70,9 @@ Additional values can be set in `.env` file
 
 | Setting | Description |
 | --- | --- |
+| ADMIN_SECRET | Sets a bearer token with full C2S API access for all guppe actors
 | PROXY_MODE | Enable use behind an SSL-terminating proxy or load balancer, serves over http instead of https and sets Express `trust proxy` setting to the value of `PROXY_MODE` (e.g. `1`, [other options](https://expressjs.com/en/guide/behind-proxies.html)) See note. |
+| USE_ATTACHMENTS | Add Mastodon-style user attributes to groups based on data in `./data/attachments.json`
 
 **Notes on use with a reverse proxy**: When setting proxyMode, you must ensure your reverse proxy sets the following headers: X-Forwarded-For, X-Forwarded-Host, and X-Forwarded-Proto (example for nginx below).
 
