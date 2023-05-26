@@ -34,6 +34,9 @@
     <div class="flex-center">
       <object type="image/svg+xml" data="https://opencollective.com/guppe-groups/tiers/member.svg?avatarHeight=48&width=350"></object>
     </div>
+    <div class="flex-center">
+      <object type="image/svg+xml" data="https://opencollective.com/guppe-groups/tiers/annual-member.svg?avatarHeight=48&width=350"></object>
+    </div>
 
     <h2 class="w3-center">Active Groups</h2>
     <p class="w3-center">Top 50 groups with the most recent posts</p>

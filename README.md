@@ -19,6 +19,8 @@ I fundamentally do not believe that being a programmer gives me any special righ
 
 [![Guppe Members](https://opencollective.com/guppe-groups/tiers/member.svg?avatarHeight=36&width=600)](https://opencollective.com/guppe-groups)
 
+[![Guppe Members](https://opencollective.com/guppe-groups/tiers/annual-member.svg?avatarHeight=36&width=600)](https://opencollective.com/guppe-groups)
+
 
 ## Tech stack
 
