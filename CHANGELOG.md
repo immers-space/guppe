@@ -1,3 +1,8 @@
+## v1.4.1 (2023-05-26)
+
+### Added
+* Update `activitypub-express` to add User-Agent headers to federation requests
+
 ## v1.4.0 (2023-03-17)
 
 ### Added
