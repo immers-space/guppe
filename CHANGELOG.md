@@ -1,4 +1,4 @@
-## Unreleased
+## v1.5.2 (2023-06-23)
 
 ### Fixed
 * Fix irrelevant activities filter and allow deletes and updates through
