@@ -1,3 +1,11 @@
+## v1.5.1 (2023-06-23)
+Efficiency and compatibility updates
+### Fixed
+* Detect and bail out on irrelevant activities earlier in the flow to save work (several softwares seem to be spamming every known guppe actor with all their public activity)
+* Fix cache retrieval of actor keys during signature verification
+* Detect and bail out on unverifiable deletes before trying to fetch the actor
+* Fix real ip address not logged behind reverse proxy
+* Increase log storage
 ## v1.5.0 (2023-05-26)
 
 ### Added
