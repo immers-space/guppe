@@ -1,3 +1,9 @@
+## Unreleased
+
+### Fixed
+* Fix irrelevant activities filter and allow deletes and updates through
+* Fixed unverifiable delete detection for duplicate deliveries
+
 ## v1.5.1 (2023-06-23)
 Efficiency and compatibility updates
 ### Fixed
