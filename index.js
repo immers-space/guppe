@@ -56,7 +56,7 @@ const apex = ActivitypubExpress({
 })
 
 app.use(
-  morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status Accepts ":req[accept]" ":referrer" ":user-agent"'),
+  morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status ":referrer" ":user-agent"'),
   express.json({ type: apex.consts.jsonldTypes }),
   apex,
   function checkAdminKey (req, res, next) {
@@ -92,6 +92,24 @@ async function actorOnDemand (req, res, next) {
   } catch (err) { return next(err) }
   next()
 }
+// Lots of servers are delivering inappropriate activities to Guppe, move the filtering up earlier in the process to save work
+apex.net.inbox.post.slice(
+  // just after standardizing the jsonld
+  apex.net.inbox.post.indexOf(apex.net.validators.jsonld) + 1,
+  0,
+  function (req, res, next) {
+    try {
+      const groupIRI = apex.utils.usernameToIRI(apex.actorParam)
+      if (!apex.audienceFromActivity(req.body).includes(groupIRI) && !req.body.object?.[0] === groupIRI) {
+        console.log('Ignoring irrelevant activity', req.body)
+        return res.status(202).send('Irrelevant activity ignored')
+      }
+    } catch (err) {
+      console.warn('Error performing prefilter:', err)
+    }
+    next()
+  }
+)
 // Do not boost posts from servers who abuse the service.
 apex.net.inbox.post.splice(
   // Blocked domain check is inserted into apex inbox route right after the sender is verified
@@ -145,11 +163,6 @@ app.on('apex-inbox', async ({ actor, activity, recipient, object }) => {
   switch (activity.type.toLowerCase()) {
     // automatically reshare incoming posts
     case 'create': {
-      // check audience to ignore forwarded messages not adddressed to group
-      const audience = apex.audienceFromActivity(activity)
-      if (!audience.includes(recipient.id) || !activity.object?.length) {
-        return
-      }
       const to = [
         recipient.followers[0],
         apex.consts.publicAddress

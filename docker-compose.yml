@@ -9,13 +9,23 @@ services:
           - "node.labels.web==true"
     restart: always
     ports:
-      - 80:80
-      - 443:443
+      - mode: host
+        protocol: tcp
+        published: 80
+        target: 80
+      - mode: host
+        protocol: tcp
+        published: 443
+        target: 443
     volumes:
       - ssl_data:/etc/resty-auto-ssl
     depends_on:
       - guppe
     env_file: '.env'
+    logging:
+      driver: local
+      options:
+        max-size: '100m'
   guppe:
     image: datatitian/guppe
     deploy:
@@ -34,7 +44,7 @@ services:
     logging:
       driver: local
       options:
-        max-size: '10m'
+        max-size: '100m'
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8085"]
       interval: 1m30s
@@ -60,7 +70,7 @@ services:
     logging:
       driver: local
       options:
-        max-size: '10m'
+        max-size: '100m'
 
   mongodb:
     image: mongo:4.2
@@ -76,7 +86,7 @@ services:
     logging:
       driver: local
       options:
-        max-size: '10m'
+        max-size: '100m'
 
 volumes:
   mongo-data:
