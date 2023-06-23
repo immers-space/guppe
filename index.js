@@ -92,16 +92,31 @@ async function actorOnDemand (req, res, next) {
   } catch (err) { return next(err) }
   next()
 }
-// Lots of servers are delivering inappropriate activities to Guppe, move the filtering up earlier in the process to save work
-apex.net.inbox.post.slice(
+const acceptablePublicActivities = ['delete', 'update']
+apex.net.inbox.post.splice(
   // just after standardizing the jsonld
   apex.net.inbox.post.indexOf(apex.net.validators.jsonld) + 1,
   0,
-  function (req, res, next) {
+  function inboxLogger (req, res, next) {
     try {
-      const groupIRI = apex.utils.usernameToIRI(apex.actorParam)
-      if (!apex.audienceFromActivity(req.body).includes(groupIRI) && !req.body.object?.[0] === groupIRI) {
-        console.log('Ignoring irrelevant activity', req.body)
+      console.log('%s from %s to %s', req.body.type, req.body.actor?.[0], req.params[apex.actorParam])
+    } finally {
+      next()
+    }
+  },
+  // Lots of servers are delivering inappropriate activities to Guppe, move the filtering up earlier in the process to save work
+  function inboxFilter (req, res, next) {
+    try {
+      const groupIRI = apex.utils.usernameToIRI(req.params[apex.actorParam])
+      const activityAudience = apex.audienceFromActivity(req.body)
+      const activityType = req.body.type?.toLowerCase()
+      const activityObject = req.body.object?.[0]
+      if (
+        !activityAudience.includes(groupIRI) &&
+        activityObject !== groupIRI &&
+        !acceptablePublicActivities.includes(activityType)
+      ) {
+        console.log('Ignoring irrelevant activity sent to %s: %j', groupIRI, req.body)
         return res.status(202).send('Irrelevant activity ignored')
       }
     } catch (err) {
