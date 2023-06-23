@@ -56,7 +56,7 @@ const apex = ActivitypubExpress({
 })
 
 app.use(
-  morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status Accepts ":req[accept]" ":referrer" ":user-agent"'),
+  morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status Sig ":req[authorization]" ":referrer" ":user-agent"'),
   express.json({ type: apex.consts.jsonldTypes }),
   apex,
   function checkAdminKey (req, res, next) {
