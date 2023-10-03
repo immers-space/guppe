@@ -1,3 +1,8 @@
+## Unreleased
+
+### Added
+* node 18 support
+
 ## v1.5.2 (2023-06-23)
 
 ### Fixed
