@@ -56,7 +56,7 @@ docker stack deploy --compose-file docker-compose.yml guppe
 Backup database:
 
 ```
-docker-compose exec -T mongodb sh -c 'mongodump --archive' > guppe.dump
+docker exec <MONGO CONTAINER NAME> sh -c 'mongodump --archive' > guppe.dump
 ```
 
 Fetch latest code & restart server:
