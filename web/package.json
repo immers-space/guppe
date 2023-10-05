@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,12 +10,12 @@
     "dev": "vue-cli-service build --watch --mode development"
   },
   "dependencies": {
-    "@vue/cli-plugin-babel": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10",
-    "vue-router": "^3.0.3",
-    "vue-template-compiler": "^2.6.10"
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "core-js": "^3.33.0",
+    "vue": "^2.6.13",
+    "vue-router": "^3.0.7",
+    "vue-template-compiler": "^2.6.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^3.11.0",

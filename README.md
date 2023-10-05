@@ -33,6 +33,43 @@ to the base apex setup.
 There's also an HTML front-end using Vue (`/web`) to display popular groups and provide
 fallback user profile discovery.
 
+## Local dev
+Install [mongodb](https://docs.mongodb.com/manual/installation/)
+
+Create an `.env` file in the root directory with the following values:
+
+```
+PORT_HTTPS=8085
+DOMAIN=localhost:8085
+DB_URL=mongodb://localhost:27017
+DB_NAME=guppe
+KEY_PATH=certs/key.pem
+CERT_PATH=certs/cert.pem
+NODE_TLS_REJECT_UNAUTHORIZED=0
+NODE_ENV=development
+PROXY_MODE=0
+ADMIN_SECRET=secret
+```
+
+Create a `certs` directory and generate a key pair:
+
+```
+mkdir certs
+cd certs
+openssl req -nodes -new -x509 -keyout key.pem -out cert.pem
+```
+
+Install packages and run the local server
+
+```
+cd web/
+npm install
+npm run build
+cd ..
+npm install
+npm run start
+```
+
 ## Installation
 
 Guppe uses Docker Swarm for easy load balancing Web server replicas
@@ -56,7 +93,7 @@ docker stack deploy --compose-file docker-compose.yml guppe
 Backup database:
 
 ```
-docker-compose exec -T mongodb sh -c 'mongodump --archive' > guppe.dump
+docker exec <MONGO CONTAINER NAME> sh -c 'mongodump --archive' > guppe.dump
 ```
 
 Fetch latest code & restart server:

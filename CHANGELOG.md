@@ -1,6 +1,7 @@
-## Unreleased
+## v1.6.0 (2023-10-04)
 
 ### Added
+* Upgrade vue/cli-service and related packages to support node 18 ssl
 * node 18 support
 
 ## v1.5.2 (2023-06-23)
