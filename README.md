@@ -1,3 +1,12 @@
+# A note on why this is archived
+
+I support Palestine and unequivocally oppose the genocide perpetrated by the state of Isreal.
+At the same time, I will not tolerate anyone making the racist assumption that all Jewish people
+are associated with Isreal by default. Because people cannot act normal on here, I am locking the repo
+so that I don't have to spend time moderating this racism.
+
+Thank you for all the love given to Guppe by everyone else over the years. 
+
 # Gup.pe
 
 Social groups for the fediverse - making it easy to connect and meet new people based on shared interests without the manipulation of your attention to maximize ad revenue nor the walled garden lock-in of capitalist social media.
